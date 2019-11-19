@@ -1,0 +1,80 @@
+@import "~bootstrap/scss/bootstrap";
+$fa-font-path: "~font-awesome/fonts";
+@import "~font-awesome/scss/font-awesome";
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.todo {
+  width: 470px;
+  margin: 5rem auto;
+  ul {
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      button {
+        margin-left: 0.5rem;
+      }
+
+      .checkbox {
+        display: flex;
+        flex-grow: 1;
+        align-items: center;
+        cursor: pointer;
+        p {
+          margin: 0 .5rem;
+        }
+
+        form {
+          margin-left: 0.5rem;
+          flex-grow: 1;
+        }
+      }
+    }
+  }
+}
+
+.fa-check-square-o + p {
+  text-decoration: line-through;
+}
+
+.add {
+  margin-top: 1rem;
+}
+
+.note-exit-active {
+  animation: note 800ms ease-out forwards;
+}
+
+.note-enter-active {
+  animation: note 800ms ease-in alternate-reverse;
+}
+
+@keyframes note {
+  0% {
+    transform: translateX(0);
+  }
+
+  30% {
+    opacity: .7;
+    transform: translateX(30px);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(-200px);
+  }
+}
