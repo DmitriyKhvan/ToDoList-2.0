@@ -44,8 +44,32 @@ code {
         }
       }
     }
+
+    .important {
+      transition: background 1s ease-out;
+      background: rgba(0, 123, 255, 0.19);
+    }
+
+    .important-false {
+      transition: background 1s ease-out;
+      background: transparent
+    }
   }
 }
+
+// .important-enter {
+//   background: transparent;
+// }
+
+// .important-enter-active {
+//   transition: background 800ms ease-out;
+//   background: #ff380042;
+// }
+
+// .important-exit-active {
+//   transition: background 800ms ease-out;
+//   background: transparent;
+// }
 
 .fa-check-square-o + p {
   text-decoration: line-through;

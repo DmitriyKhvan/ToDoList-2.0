@@ -8,7 +8,7 @@ export const NoteEditItem = ({note, setEdit}) => {
   const submitHandler = (event) => {
     event.preventDefault();
     if (value.trim()) {
-      firebase.editNote(note.id, value.trim(), note.complete);
+      firebase.editNote(note.id, value.trim(), note.complete, note.important);
     }
     setEdit(false);
   }

@@ -22,7 +22,9 @@ const App = () => {
         {
           loading
             ? <Loader />
-            : <Notes notes={notes} removeNote={removeNote}/>
+            : notes
+              ? <Notes notes={notes} removeNote={removeNote}/>
+              : null
         }
         <Form />
       </div>

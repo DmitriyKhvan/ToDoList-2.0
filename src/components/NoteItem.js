@@ -3,7 +3,7 @@ import { FirebaseContext } from '../context/firebase/firebaseContext'
 import { NoteEditItem } from './NoteEditItem';
 
 export const NoteItem = ({note}) => {
-  const farebase = useContext(FirebaseContext);
+  const firebase = useContext(FirebaseContext);
   const [edit, setEdit] = useState(false);
   
   let complete = "fa fa-lg fa-square-o";
@@ -15,7 +15,7 @@ export const NoteItem = ({note}) => {
     <Fragment>
       <div 
         className="checkbox"
-        onClick = {() => farebase.editNote(note.id, note.noteText, !note.complete)}
+        onClick = {() => firebase.editNote(note.id, note.noteText, !note.complete, false)}
       >
         <i className={ complete }></i>
         {edit
@@ -27,17 +27,24 @@ export const NoteItem = ({note}) => {
 
       <div>
         <button
-          className="btn btn-outline-warning btn-sm"
-          // onClick={() => editNote(note.id, 'Edit note')}
+          className="btn btn-outline-success btn-sm"
            onClick={() => setEdit(!edit)}
         >
           <i className="fa fa-pencil" aria-hidden="true"></i>
         </button>
+
+        <button
+          className="btn btn-outline-warning btn-sm"
+          onClick={() => firebase.editNote(note.id, note.noteText, false, !note.important)}
+        >
+          <i className="fa fa-exclamation-triangle"></i>
+        </button>
+
         <button
           className="btn btn-outline-danger btn-sm"
-          onClick={() => farebase.removeNote(note.id)}
+          onClick={() => firebase.removeNote(note.id)}
         >
-          <i className="fa fa-lg fa-trash"></i>
+          <i className="fa fa-trash"></i>
         </button>
       </div>
     </Fragment>

@@ -20,13 +20,13 @@ export const Form = () => {
         <input 
           type="text" 
           className="form-control" 
-          placeholder="" 
+          placeholder="What need to do!" 
           value={value}
           onChange={ e => setValue(e.target.value) }
         />
         <div className="input-group-append">
-          <button className="btn btn-outline-success" type="submit">
-            Add
+          <button className="btn btn-secondary" type="submit">
+            Add Task
           </button>
         </div>
       </div>

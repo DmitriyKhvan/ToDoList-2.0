@@ -7,7 +7,8 @@ import {
   FETCH_NOTES, 
   SHOW_LOADER, 
   REMOVE_NOTE, 
-  EDIT_NOTE 
+  EDIT_NOTE,
+  NULL_NOTES 
 } from '../types';
 
 const url = 'https://todolist-6e9bb.firebaseio.com';
@@ -26,27 +27,33 @@ export const FirebaseState = ({children}) => {
   const fetchNotes = async () => {
     showLoader();
     const res = await axios.get(`${url}/notes.json`);
-    console.log(res);
-    const payload = Object.keys(res.data).map(key => {
-      return {
-        id: key,
-        ...res.data[key]
-      }
-    })
+    
+    if (res.data) {
+      const payload = Object.keys(res.data).map(key => {
+        return {
+          id: key,
+          ...res.data[key]
+        }
+      })
 
-    console.log(payload);
+      dispatch({
+        type: FETCH_NOTES,
+        payload
+      })
+    }
 
     dispatch({
-      type: FETCH_NOTES,
-      payload
+      type: NULL_NOTES
     })
+
   }
 
   const addNote = async (noteText) => {
     const note = {
       noteText,
       date: new Date().toJSON(),
-      complete: false
+      complete: false,
+      important: false
     }
 
     const res = await axios.post(`${url}/notes.json`, note);
@@ -61,11 +68,12 @@ export const FirebaseState = ({children}) => {
     });
   }
 
-  const editNote = async (id, noteText, complete) => {
+  const editNote = async (id, noteText, complete, important) => {
     const note = {
       noteText,
       date: new Date().toJSON(),
-      complete
+      complete,
+      important
     }
 
     axios.patch(`${url}/notes/${id}.json`, note)
@@ -92,7 +100,9 @@ export const FirebaseState = ({children}) => {
 
   return (
     <FirebaseContext.Provider value={{
-      notes: state.notes.sort((a, b) => a.complete - b.complete),
+      notes: state.notes
+        .sort((a, b) => a.complete - b.complete)
+        .sort((a, b) => b.important - a.important),
       loading: state.loading,
       addNote,
       editNote,
