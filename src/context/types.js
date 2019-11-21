@@ -4,3 +4,5 @@ export const REMOVE_NOTE = 'REMOVE_NODE';
 export const FETCH_NOTES = 'FETCH_NODES'; 
 export const SHOW_LOADER = 'SHOW_LOADER';
 export const NULL_NOTES = 'NULL_NOTES';
+export const SEARCH_NOTES = 'SEARCH_NOTES';
+export const STATUS_NOTES = 'STATUS_NOTES';

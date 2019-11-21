@@ -4,7 +4,9 @@ import {
   EDIT_NOTE, 
   FETCH_NOTES, 
   SHOW_LOADER,
-  NULL_NOTES
+  NULL_NOTES,
+  SEARCH_NOTES,
+  STATUS_NOTES
 } from "../types";
 
 export const firebaseReducer = (state, action) => {
@@ -46,6 +48,17 @@ export const firebaseReducer = (state, action) => {
         ...state,
         loading: false
       }
+    case SEARCH_NOTES:
+      return {
+        ...state, 
+        term: action.payload
+      }
+    case STATUS_NOTES:
+      return {
+        ...state,
+        status: action.payload
+      }
+    
     default: 
       return state;
   }

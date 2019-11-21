@@ -16,6 +16,20 @@ code {
     monospace;
 }
 
+.header {
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.top-panel {
+  margin-bottom: .5rem;
+}
+
+.search {
+  margin-right: .3rem;
+  flex-grow: 1;
+}
+
 .todo {
   width: 470px;
   margin: 5rem auto;
@@ -43,16 +57,21 @@ code {
           flex-grow: 1;
         }
       }
+
+      .buttons {
+        min-width: 115px;
+      }
     }
 
     .important {
-      transition: background 1s ease-out;
+      transition: background 1s ease-out, transform 1s ease-out;
       background: rgba(0, 123, 255, 0.19);
+      //transform: translateY(-200px);
     }
 
     .important-false {
-      transition: background 1s ease-out;
-      background: transparent
+      transition: background 1s ease-out, transform 1s ease-out;
+      background: transparent;
     }
   }
 }
@@ -76,7 +95,7 @@ code {
 }
 
 .add {
-  margin-top: 1rem;
+  margin-top: 0.5rem;
 }
 
 .note-exit-active {

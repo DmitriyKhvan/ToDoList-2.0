@@ -4,6 +4,8 @@ import { Notes } from "./components/Notes";
 import { Header } from "./components/Header";
 import { Loader } from "./components/Loader";
 import { FirebaseContext } from './context/firebase/firebaseContext';
+import { SearchPanel } from "./components/SearchPanel";
+import { ItemStatusFilter } from './components/ItemStatusFilter';
 const App = () => {
   const { loading, notes, fetchNotes, removeNote } = useContext(FirebaseContext);
 
@@ -16,9 +18,12 @@ const App = () => {
   return (
     
     <div className="d-flex">
-      {console.log('loading', loading)}
       <div className="todo">
-        <Header />
+        <Header notes={notes} />
+        <div className="top-panel d-flex">
+          <SearchPanel />
+          <ItemStatusFilter />
+        </div>
         {
           loading
             ? <Loader />

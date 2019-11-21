@@ -8,7 +8,9 @@ import {
   SHOW_LOADER, 
   REMOVE_NOTE, 
   EDIT_NOTE,
-  NULL_NOTES 
+  NULL_NOTES, 
+  SEARCH_NOTES,
+  STATUS_NOTES 
 } from '../types';
 
 const url = 'https://todolist-6e9bb.firebaseio.com';
@@ -17,7 +19,9 @@ export const FirebaseState = ({children}) => {
 
   const initialState = {
     notes: [],
-    loading: false
+    loading: false,
+    term: '',
+    status: 'all'
   }
 
   const [state, dispatch] = useReducer(firebaseReducer, initialState);
@@ -68,7 +72,9 @@ export const FirebaseState = ({children}) => {
     });
   }
 
-  const editNote = async (id, noteText, complete, important) => {
+  const editNote = async (id, noteText, complete, important, e) => {
+    //e.target.parentNode.parentNode.parentNode.style.transform = "translateY(-100px)";
+    
     const note = {
       noteText,
       date: new Date().toJSON(),
@@ -98,17 +104,56 @@ export const FirebaseState = ({children}) => {
     });
   }
 
+  const onSearchChange = (term) => {
+    dispatch({
+      type: SEARCH_NOTES,
+      payload: term
+    })
+  } 
+
+  const searchTask = (notes) => {
+    if (state.term.length === 0) {
+      return notes;
+    }
+    return notes.filter(note => {
+      return note.noteText.toLowerCase().indexOf(state.term.toLowerCase()) > -1
+    })
+  }
+
+  const setStatusFilster = (status) => {
+    dispatch({
+      type: STATUS_NOTES,
+      payload: status
+    })
+  }
+
+  const filterNotes = (notes) => {
+    switch (state.status) {
+      case 'all':
+        return notes;
+      case 'done':
+        return notes.filter(note => note.complete);
+      case 'active':
+        return notes.filter(note => !note.complete);
+      default: 
+        return notes;
+    }
+  }
+
   return (
     <FirebaseContext.Provider value={{
-      notes: state.notes
+      notes: filterNotes(searchTask(state.notes))
         .sort((a, b) => a.complete - b.complete)
         .sort((a, b) => b.important - a.important),
       loading: state.loading,
+      status: state.status,
       addNote,
       editNote,
       removeNote,
       showLoader,
-      fetchNotes
+      fetchNotes,
+      onSearchChange,
+      setStatusFilster
     }}>
       {children}
     </FirebaseContext.Provider>

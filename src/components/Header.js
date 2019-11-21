@@ -1,11 +1,13 @@
-import React, { Fragment } from "react";
+import React from "react";
 
-export const Header = () => {
+export const Header = ({notes}) => {
+  const doneTask = notes.filter(note => note.complete).length;
+  const todoTask = notes.length - doneTask;
 
   return (
-    <Fragment>
+    <div className="header d-flex">
       <h1>My ToDoList</h1>
-      <hr />
-    </Fragment>
+      <div>{ todoTask } more to do, { doneTask } done</div>  
+    </div>
   );
 };

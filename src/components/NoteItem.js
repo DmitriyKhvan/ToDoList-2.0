@@ -5,7 +5,7 @@ import { NoteEditItem } from './NoteEditItem';
 export const NoteItem = ({note}) => {
   const firebase = useContext(FirebaseContext);
   const [edit, setEdit] = useState(false);
-  
+
   let complete = "fa fa-lg fa-square-o";
   if (note.complete) {
     complete = "fa fa-lg fa-check-square-o";
@@ -25,7 +25,7 @@ export const NoteItem = ({note}) => {
         
       </div>
 
-      <div>
+      <div className="buttons">
         <button
           className="btn btn-outline-success btn-sm"
            onClick={() => setEdit(!edit)}
@@ -35,7 +35,7 @@ export const NoteItem = ({note}) => {
 
         <button
           className="btn btn-outline-warning btn-sm"
-          onClick={() => firebase.editNote(note.id, note.noteText, false, !note.important)}
+          onClick={(e) => firebase.editNote(note.id, note.noteText, false, !note.important, e)}
         >
           <i className="fa fa-exclamation-triangle"></i>
         </button>

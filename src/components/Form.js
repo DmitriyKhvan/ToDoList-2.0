@@ -26,7 +26,7 @@ export const Form = () => {
         />
         <div className="input-group-append">
           <button className="btn btn-secondary" type="submit">
-            Add Task
+            Add task
           </button>
         </div>
       </div>
