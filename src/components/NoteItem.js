@@ -15,7 +15,7 @@ export const NoteItem = ({note}) => {
     <Fragment>
       <div 
         className="checkbox"
-        onClick = {() => firebase.editNote(note.id, note.noteText, !note.complete, false)}
+        onClick = {(e) => firebase.noteComplete(note.id, note.noteText, !note.complete, false, e)}
       >
         <i className={ complete }></i>
         {edit
@@ -28,14 +28,14 @@ export const NoteItem = ({note}) => {
       <div className="buttons">
         <button
           className="btn btn-outline-success btn-sm"
-           onClick={() => setEdit(!edit)}
+          onClick={() => setEdit(!edit)}
         >
           <i className="fa fa-pencil" aria-hidden="true"></i>
         </button>
 
         <button
           className="btn btn-outline-warning btn-sm"
-          onClick={(e) => firebase.editNote(note.id, note.noteText, false, !note.important, e)}
+          onClick={(e) => firebase.noteImportant(note.id, note.noteText, false, !note.important, e)}
         >
           <i className="fa fa-exclamation-triangle"></i>
         </button>

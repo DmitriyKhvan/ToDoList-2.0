@@ -38,7 +38,6 @@ code {
       display: flex;
       justify-content: space-between;
       align-items: center;
-
       button {
         margin-left: 0.5rem;
       }
@@ -64,31 +63,16 @@ code {
     }
 
     .important {
-      transition: background 1s ease-out, transform 1s ease-out;
       background: rgba(0, 123, 255, 0.19);
-      //transform: translateY(-200px);
+      z-index: 1;
     }
 
-    .important-false {
-      transition: background 1s ease-out, transform 1s ease-out;
-      background: transparent;
+    .complete {
+      background: rgba(255, 0, 21, 0.19);
+      z-index: 1;
     }
   }
 }
-
-// .important-enter {
-//   background: transparent;
-// }
-
-// .important-enter-active {
-//   transition: background 800ms ease-out;
-//   background: #ff380042;
-// }
-
-// .important-exit-active {
-//   transition: background 800ms ease-out;
-//   background: transparent;
-// }
 
 .fa-check-square-o + p {
   text-decoration: line-through;

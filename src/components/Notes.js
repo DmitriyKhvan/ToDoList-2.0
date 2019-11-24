@@ -7,11 +7,12 @@ export const Notes = ({ notes, removeNote}) => {
   return (
     <TransitionGroup component="ul" className="list-group">
       {notes.map(note => {
-        let important = "list-group-item";
+        let cls = "list-group-item";
         if (note.important) {
-          important += " important";
-        } else {
-          important += " important-false"
+          cls += " important";
+        } 
+        if (note.complete) {
+          cls += " complete";
         }
 
         return (
@@ -20,7 +21,7 @@ export const Notes = ({ notes, removeNote}) => {
             classNames={'note'}
             timeout={800}
           >
-            <li className={ important }>
+            <li className={ cls }>
               <NoteItem note={note} removeNote={removeNote}/> 
             </li>
           </ CSSTransition>
