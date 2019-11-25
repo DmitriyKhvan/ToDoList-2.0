@@ -78,10 +78,6 @@ export const FirebaseState = ({ children }) => {
   //   })
   // }
 
-  const draw = (leg, elem, elemTop) => {
-    elem.style.top = elemTop - leg + "px";
-  };
-
   const editNote = async (id, noteText, complete, important) => {
     
     const note = {
@@ -104,80 +100,12 @@ export const FirebaseState = ({ children }) => {
     });
   };
 
-  const noteImportant = async (id, noteText, complete, important, e) => {
-    let elem = e.target.parentNode.parentNode;
-    if(!elem.classList.contains('list-group-item')){
-      elem = elem.parentNode;
-    }
-    // console.log(elem);
-    const elemImp = document.querySelectorAll(".important");
-    let elemImpLastHeight = document.querySelector("li").offsetTop;
-
-    if (elemImp.length) {
-      elemImpLastHeight = elemImp[elemImp.length - 1].offsetTop + 57;
-    }
-
-    const elemHeight = elem.offsetTop;
-    const elemTop = elemHeight - elemImpLastHeight;
-
-    if (elemTop > 0) {
-      elem.style.top = elemTop - 57 + "px";
-      let i = 1;
-
-      setTimeout(function go() {
-        // сколько времени прошло с начала анимации?
-        let timePassed = 20 * i;
-        let leg = (elemTop * timePassed) / 1000;
-        
-        // отрисовать анимацию на момент timePassed, прошедший с начала анимации
-        draw(leg, elem, elemTop);
-        if (i < 50) setTimeout(go, 20);
-        i++;
-      }, 20);
-    }
-
-    const note = {
-      noteText,
-      date: new Date().toJSON(),
-      complete,
-      important
-    };
-
-    axios.patch(`${url}/notes/${id}.json`, note);
-
-    const payload = {
-      id,
-      ...note
-    };
-
-    dispatch({
-      type: EDIT_NOTE,
-      payload
-    });
+  const draw = (leg, elem, elemTop) => {
+    elem.style.top = elemTop - leg + "px";
   };
 
-  const noteComplete = async (id, noteText, complete, important, e) => {
-    let elem = e.target.parentNode.parentNode;
-    if(!elem.classList.contains('list-group-item')){
-      elem = elem.parentNode;
-    }
-    
-    const elemImp = document.querySelectorAll(".complete");
-    const elemImpLast = document.querySelectorAll("li");
-    let elemImpLastHeight = elemImpLast[elemImpLast.length - 1].offsetTop;
-
-    if (elemImp.length) {
-      elemImpLastHeight = elemImp[0].offsetTop - 57;
-    }
-
-    const elemHeight = elem.offsetTop;
-    const elemTop = elemHeight - elemImpLastHeight;
-
-    
-    if (elemTop <= 0) {
-      elem.style.top = elemTop + 57 + "px";
-      let i = 1;
-
+  const animationElem = (elem, elemTop) => {
+    let i = 1;
       setTimeout(function go() {
         // сколько времени прошло с начала анимации?
         let timePassed = 20 * i;
@@ -188,26 +116,55 @@ export const FirebaseState = ({ children }) => {
         if (i < 50) setTimeout(go, 20);
         i++;
       }, 20);
+  }
+
+  const noteImportant = (id, noteText, complete, important, e) => {
+    let elem = e.target.parentNode.parentNode;
+    if(!elem.classList.contains('list-group-item')){
+      elem = elem.parentNode;
+    }
+   
+    const elemImp = document.querySelectorAll(".important");
+    let elemImpLastDistance = document.querySelector("li").offsetTop;
+    const elemHeight = elem.offsetHeight;
+
+    if (elemImp.length) {
+      elemImpLastDistance = elemImp[elemImp.length - 1].offsetTop + elemHeight;
     }
 
-    const note = {
-      noteText,
-      date: new Date().toJSON(),
-      complete,
-      important
-    };
+    const elemDistance = elem.offsetTop;
+    const elemTop = elemDistance - elemImpLastDistance;
+  
+    if (elemTop > 0) {
+      animationElem(elem, elemTop);
+    }
 
-    axios.patch(`${url}/notes/${id}.json`, note);
+    editNote(id, noteText, complete, important);
+  };
 
-    const payload = {
-      id,
-      ...note
-    };
+  const noteComplete = (id, noteText, complete, important, e) => {
+    let elem = e.target.parentNode;
+    if(!elem.classList.contains('list-group-item')){
+      elem = elem.parentNode;
+    }
+    
+    const elemComp = document.querySelectorAll(".complete");
+    const elemImpLast = document.querySelectorAll("li");
+    let elemCompLastDistance = elemImpLast[elemImpLast.length - 1].offsetTop;
+    const elemHeight = elem.offsetHeight;
 
-    dispatch({
-      type: EDIT_NOTE,
-      payload
-    });
+    if (elemComp.length) {
+      elemCompLastDistance = elemComp[0].offsetTop - elemHeight;
+    }
+
+    const elemDistance = elem.offsetTop;
+    const elemTop = elemDistance - elemCompLastDistance;
+    
+    if (elemTop < 0 && state.status !== 'active') {
+      animationElem(elem, elemTop);
+    }
+
+    editNote(id, noteText, complete, important);
   };
 
   const removeNote = async id => {
