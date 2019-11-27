@@ -212,12 +212,16 @@ export const FirebaseState = ({ children }) => {
     }
   };
 
+  const getNotes = () => {
+    return filterNotes(searchTask(state.notes))
+                .sort((a, b) => a.complete - b.complete)
+                .sort((a, b) => b.important - a.important)
+  }
+
   return (
     <FirebaseContext.Provider
       value={{
-        notes: filterNotes(searchTask(state.notes))
-          .sort((a, b) => a.complete - b.complete)
-          .sort((a, b) => b.important - a.important),
+        notes: getNotes(),
         loading: state.loading,
         status: state.status,
         addNote,

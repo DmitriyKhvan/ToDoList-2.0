@@ -39,7 +39,7 @@ code {
       justify-content: space-between;
       align-items: center;
       button {
-        margin-left: 0.5rem;
+        margin-left: 0.3rem;
       }
 
       .checkbox {
@@ -58,17 +58,19 @@ code {
       }
 
       .buttons {
+        display: flex;
+        justify-content: flex-end;
         min-width: 115px;
       }
     }
 
     .important {
-      background: rgba(0, 123, 255, 0.19);
+      background: rgba(255, 0, 21, 0.19);
       z-index: 1;
     }
 
     .complete {
-      background: rgba(255, 0, 21, 0.19);
+      background: rgba(0, 123, 255, 0.19);
       z-index: 1;
     }
   }
