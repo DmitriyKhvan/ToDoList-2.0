@@ -13,7 +13,7 @@ import {
   STATUS_NOTES
 } from "../types";
 
-const url = "https://todolist-6e9bb.firebaseio.com";
+const url = process.env.REACT_APP_DB_URL;
 
 export const FirebaseState = ({ children }) => {
   const initialState = {
@@ -106,16 +106,16 @@ export const FirebaseState = ({ children }) => {
 
   const animationElem = (elem, elemTop) => {
     let i = 1;
-      setTimeout(function go() {
-        // сколько времени прошло с начала анимации?
-        let timePassed = 20 * i;
-        let leg = (elemTop * timePassed) / 1000;
-        
-        // отрисовать анимацию на момент timePassed, прошедший с начала анимации
-        draw(leg, elem, elemTop);
-        if (i < 50) setTimeout(go, 20);
-        i++;
-      }, 20);
+    setTimeout(function go() {
+      // сколько времени прошло с начала анимации?
+      let timePassed = 20 * i;
+      let leg = (elemTop * timePassed) / 1000;
+      
+      // отрисовать анимацию на момент timePassed, прошедший с начала анимации
+      draw(leg, elem, elemTop);
+      if (i < 50) setTimeout(go, 20);
+      i++;
+    }, 20);
   }
 
   const noteImportant = (id, noteText, complete, important, e) => {
@@ -134,7 +134,9 @@ export const FirebaseState = ({ children }) => {
 
     const elemDistance = elem.offsetTop;
     const elemTop = elemDistance - elemImpLastDistance;
-  
+
+    //console.log(`${elemTop} = ${elemDistance} - ${elemImpLastDistance}`)
+
     if (elemTop > 0) {
       animationElem(elem, elemTop);
     }
@@ -159,6 +161,7 @@ export const FirebaseState = ({ children }) => {
 
     const elemDistance = elem.offsetTop;
     const elemTop = elemDistance - elemCompLastDistance;
+    //console.log(`${elemTop} = ${elemDistance} - ${elemCompLastDistance}`)
     
     if (elemTop < 0 && state.status !== 'active') {
       animationElem(elem, elemTop);
